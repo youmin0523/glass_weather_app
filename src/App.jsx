@@ -3,6 +3,7 @@ import ErrorMessage from './components/ErrorMessage';
 import LoadingSpinner from './components/LoadingSpinner';
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
+import WeatherForecast from './components/WeatherForecast';
 import useWeather from './hook/useWeather';
 
 const App = () => {
@@ -70,7 +71,9 @@ const App = () => {
                 <div className="xl:col-span-2">
                   <WeatherCard />
                 </div>
-                <div className="xl:col-span-1"></div>
+                <div className="xl:col-span-1">
+                  <WeatherForecast />
+                </div>
               </div>
             </div>
           </div>
