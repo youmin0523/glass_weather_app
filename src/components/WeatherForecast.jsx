@@ -30,8 +30,8 @@ const WeatherForecast = () => {
               <span className="text-sm font-medium">10%</span>
             </div>
             <div className="text-right">
-              <div className="text-white font-bold text-xl">10℃</div>
-              <div className="text-white text-sm font-medium">4℃</div>
+              <div className="text-white font-bold text-xl">10°</div>
+              <div className="text-white text-sm font-medium">4°</div>
             </div>
           </div>
         </div>
