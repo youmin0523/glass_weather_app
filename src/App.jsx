@@ -1,7 +1,14 @@
 import './App.css';
+import ErrorMessage from './components/ErrorMessage';
+import LoadingSpinner from './components/LoadingSpinner';
 import SearchBar from './components/SearchBar';
+import WeatherCard from './components/WeatherCard';
+import useWeather from './hook/useWeather';
 
 const App = () => {
+  // Hook Data
+  const { loading, error } = useWeather();
+  // console.log(loading, error);
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
@@ -38,6 +45,33 @@ const App = () => {
             {/* Search Bar */}
             <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-6 mb-12">
               <SearchBar />
+            </div>
+          </div>
+
+          {/* Main Section Contents */}
+          <div className="flex justify-center">
+            {loading && (
+              <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20">
+                <LoadingSpinner />
+                <p className="text-white/80 text-center mt-4 font-medium">
+                  Fetching Latest Weather Data...
+                </p>
+              </div>
+            )}
+
+            {error && (
+              <div className="max-w-2xl mx-auto">
+                <ErrorMessage />
+              </div>
+            )}
+
+            <div>
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <div className="xl:col-span-2">
+                  <WeatherCard />
+                </div>
+                <div className="xl:col-span-1"></div>
+              </div>
             </div>
           </div>
         </div>
