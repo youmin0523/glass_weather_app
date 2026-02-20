@@ -1,5 +1,5 @@
 import { MapPin, Search, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { searchCities } from '../utils/weatherAPI';
 
 const SearchBar = ({ onSearch, loading }) => {
@@ -7,6 +7,8 @@ const SearchBar = ({ onSearch, loading }) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [suggestion, setSuggestion] = useState([]);
+
+  const searchRef = useRef();
 
   useEffect(() => {
     const searchTimeout = setTimeout(async () => {
@@ -27,14 +29,36 @@ const SearchBar = ({ onSearch, loading }) => {
         setShowSuggestion(false);
       }
     }, 300);
+
+    return () => clearTimeout(searchTimeout);
   }, [query]);
 
   const clearSearch = () => {
     setQuery('');
+    setSuggestion([]);
+    setShowSuggestion(false);
   };
 
+  const handleSuggestionClick = (city) => {
+    const cityName = city.name ? `${city.name}, ${city.state}` : city.name;
+    onSearch(cityName);
+    setQuery('');
+    setShowSuggestion(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSuggestion(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative w-full max-w-2xl">
+    <div className="relative w-full max-w-2xl" ref={searchRef}>
       <form className="relative">
         <div className="relative group">
           {/* SearchBar Section */}
@@ -76,6 +100,7 @@ const SearchBar = ({ onSearch, loading }) => {
               <button
                 className="w-full px-6 py-4 text-left hover:bg-white/10 transition-all duration-200 flex items-center justify-between group border-b border-white/10 last:border-none"
                 key={index}
+                onClick={() => handleSuggestionClick(city)}
               >
                 <div>
                   <div className="font-medium text-white group-hover:text-white/90">

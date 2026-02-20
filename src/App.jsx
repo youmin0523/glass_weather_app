@@ -69,16 +69,18 @@ const App = () => {
               </div>
             )}
 
-            <div>
-              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                <div className="xl:col-span-2">
-                  <WeatherCard />
-                </div>
-                <div className="xl:col-span-1">
-                  <WeatherForecast />
+            {currentWeather && !loading && (
+              <div>
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                  <div className="xl:col-span-2">
+                    <WeatherCard weather={currentWeather} />
+                  </div>
+                  <div className="xl:col-span-1">
+                    <WeatherForecast />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
