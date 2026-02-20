@@ -47,7 +47,7 @@ export const getCurrentWeather = async (city) => {
 export const searchCities = async (query) => {
   try {
     const response = await fetch(
-      `${GEO_URL}/direct?q=${query}&appid=${API_KEY}&units=metric`,
+      `${GEO_URL}/direct?q=${query}&limit=5&appid=${API_KEY}`,
     );
 
     if (!response.ok) {

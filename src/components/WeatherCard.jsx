@@ -24,14 +24,14 @@ const WeatherCard = () => {
       <div className="flex items-center justify-between mb-10">
         <div className="flex-1">
           <div className="text-7xl font-bold text-white mb-3 tracking-tight">
-            9<span className="text-4xl font-normal text-white/70">℃</span>
+            9<span className="text-4xl font-normal text-white/70">°C</span>
           </div>
           <div className="text-white/90 text-xl capitalize mb-2 font-medium">
             A little Cloudy
           </div>
           <div className="flex items-center space-x-4 text-white/60 text-sm">
-            <span>High:12℃</span>
-            <span>Low:4℃</span>
+            <span>High:12°</span>
+            <span>Low:4°</span>
           </div>
         </div>
         <div className="text-white/90 transform hover:scale-110 transition-transform duration-300">
