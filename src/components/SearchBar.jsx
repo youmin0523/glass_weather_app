@@ -1,10 +1,33 @@
 import { MapPin, Search, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { searchCities } from '../utils/weatherAPI';
 
 const SearchBar = ({ onSearch, loading }) => {
   const [query, setQuery] = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [Suggestion, setSuggestion] = useState([]);
+
+  useEffect(() => {
+    const searchTimeout = setTimeout(async () => {
+      if (query.length >= 2) {
+        setSearchLoading(true);
+        try {
+          const result = await searchCities(query);
+          setSuggestion(result);
+          setShowSuggestion(true);
+          console.log(result);
+        } catch (error) {
+          console.error('Search Failed: ', error);
+        } finally {
+          setSearchLoading(false);
+        }
+      } else {
+        setSuggestion([]);
+        setShowSuggestion(false);
+      }
+    }, 300);
+  }, [query]);
 
   const clearSearch = () => {
     setQuery('');
@@ -40,7 +63,7 @@ const SearchBar = ({ onSearch, loading }) => {
       </form>
 
       {/* Suggestion Section */}
-      {showSuggestion && (
+      {showSuggestion && (Suggestion.length > 0 || searchLoading) && (
         <div className="absolute top-full left-0 right-0 mt-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50">
           {/* Conditional */}
           {searchLoading ? (

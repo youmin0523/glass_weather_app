@@ -2,7 +2,7 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const GEO_URL = import.meta.env.VITE_GEO_URL;
 
-// Get Current Weather Data
+// GET Current Weather Data
 export const getCurrentWeather = async (city) => {
   try {
     const response = await fetch(
@@ -33,6 +33,44 @@ export const getCurrentWeather = async (city) => {
     }
 
     return data;
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(
+        'Network Error, Please Check Your Internet Connection and Try Again.',
+      );
+    }
+    throw error;
+  }
+};
+
+// GET Search City Data List
+export const searchCities = async (query) => {
+  try {
+    const response = await fetch(
+      `${GEO_URL}/direct?q=${query}&appid=${API_KEY}&units=metric`,
+    );
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error(
+          `Invalid API Key, Please Check Your API Key and Try Again.`,
+        );
+      } else {
+        throw new Error(
+          `Weather Service is temporarily unavailable, Please Try Again Later.`,
+        );
+      }
+    }
+
+    const data = await response.json();
+
+    return data.map((city) => ({
+      name: city.name,
+      lat: city.lat,
+      lon: city.lon,
+      country: city.country,
+      state: city.state || '',
+    }));
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
       throw new Error(
