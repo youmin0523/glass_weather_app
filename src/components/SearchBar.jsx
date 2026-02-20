@@ -1,7 +1,7 @@
 import { MapPin, Search, X } from 'lucide-react';
 import { useState } from 'react';
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch, loading }) => {
   const [query, setQuery] = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
