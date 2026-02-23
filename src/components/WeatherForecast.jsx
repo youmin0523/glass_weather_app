@@ -19,7 +19,7 @@ const WeatherForecast = ({ forecast, units }) => {
 
   // console.log(dailyForecast);
   const dailyItems = Object.values(dailyForecast).slice(0, 5);
-  console.log(dailyItems);
+  // console.log(dailyItems);
   return (
     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
       <div className="flex items-center space-x-3 mb-8">
