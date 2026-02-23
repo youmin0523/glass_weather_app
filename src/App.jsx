@@ -2,6 +2,7 @@ import './App.css';
 import ErrorMessage from './components/ErrorMessage';
 import LoadingSpinner from './components/LoadingSpinner';
 import SearchBar from './components/SearchBar';
+import TemperatureToggle from './components/TemperatureToggle';
 import WeatherCard from './components/WeatherCard';
 import WeatherForecast from './components/WeatherForecast';
 import useWeather from './hook/useWeather';
@@ -14,6 +15,8 @@ const App = () => {
     fetchWeatherByCity,
     currentWeather,
     fetchWeatherByLocation,
+    units,
+    toggleUnit,
   } = useWeather();
   // console.log(loading, error);
   // console.log(currentWeather);
@@ -57,6 +60,8 @@ const App = () => {
                 loading={loading}
                 onLocationSearch={fetchWeatherByLocation}
               />
+
+              <TemperatureToggle units={units} onToggle={toggleUnit} />
             </div>
           </div>
 
@@ -83,7 +88,7 @@ const App = () => {
               <div>
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
                   <div className="xl:col-span-2">
-                    <WeatherCard weather={currentWeather} />
+                    <WeatherCard weather={currentWeather} units={units} />
                   </div>
                   <div className="xl:col-span-1">
                     <WeatherForecast />

@@ -15,7 +15,7 @@ import {
   getWeatherIcon,
 } from '../utils/weatherUtils';
 
-const WeatherCard = ({ weather }) => {
+const WeatherCard = ({ weather, units }) => {
   // console.log(weather);
   console.log(weather.weather[0]);
   const iconName = getWeatherIcon(weather.weather[0]);
@@ -49,7 +49,7 @@ const WeatherCard = ({ weather }) => {
     {
       icon: Thermometer,
       label: 'Feels Like',
-      value: `${formatTemperature(weather.main.feels_like)}°`,
+      value: `${formatTemperature(weather.main.feels_like, units)}°${units}`,
       color: 'text-orange-300',
     },
   ];
@@ -91,15 +91,19 @@ const WeatherCard = ({ weather }) => {
       <div className="flex items-center justify-between mb-10">
         <div className="flex-1">
           <div className="text-7xl font-bold text-white mb-3 tracking-tight">
-            {formatTemperature(weather.main.temp)}°
-            <span className="text-4xl font-normal text-white/70">C</span>
+            {formatTemperature(weather.main.temp, units)}°
+            <span className="text-4xl font-normal text-white/70">{units}</span>
           </div>
           <div className="text-white/90 text-xl capitalize mb-2 font-medium">
             {weather.weather[0].description}
           </div>
           <div className="flex items-center space-x-4 text-white/60 text-sm">
-            <span>High:{formatTemperature(weather.main.temp_max)}°</span>
-            <span>Low:{formatTemperature(weather.main.temp_min)}°</span>
+            <span>
+              High: {formatTemperature(weather.main.temp_max, units)}°{units}
+            </span>
+            <span>
+              Low: {formatTemperature(weather.main.temp_min, units)}°{units}
+            </span>
           </div>
         </div>
         <div className="text-white/90 transform hover:scale-110 transition-transform duration-300">

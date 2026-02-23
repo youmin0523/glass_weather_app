@@ -9,7 +9,7 @@ const useWeather = () => {
   const [error, setError] = useState(null);
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
-  const [unit, setUnit] = useState('C');
+  const [units, setUnit] = useState('C');
 
   const fetchWeatherByCity = async (city) => {
     setLoading(true);
@@ -61,14 +61,19 @@ const useWeather = () => {
     fetchWeatherByCity('Seoul');
   }, []);
 
+  const toggleUnit = () => {
+    setUnit(units === 'C' ? 'F' : 'C');
+  };
+
   return {
     loading,
     error,
     currentWeather,
     forecast,
-    unit,
+    units,
     fetchWeatherByCity,
     fetchWeatherByLocation,
+    toggleUnit,
   };
 };
 
