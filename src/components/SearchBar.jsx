@@ -57,12 +57,27 @@ const SearchBar = ({ onSearch, loading, onLocationSearch }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      onSearch(query.trim());
+      setQuery('');
+      setShowSuggestion(false);
+    }
+  };
+
   return (
     <div className="relative w-full max-w-2xl" ref={searchRef}>
-      <form className="relative">
+      <form className="relative" onSubmit={handleSubmit}>
         <div className="relative group">
           {/* SearchBar Section */}
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-50 w-5 h-5 group-focus-within:text-white transition-all z-50" />
+          <button
+            type="submit"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-50 p-0 bg-transparent border-none cursor-pointer"
+          >
+            <Search className="text-gray-50 w-5 h-5 group-focus-within:text-white transition-all" />
+          </button>
+
           <input
             type="text"
             value={query}
