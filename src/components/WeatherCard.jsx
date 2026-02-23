@@ -9,7 +9,11 @@ import {
   Eye,
 } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
-import { formatTemperature, getWeatherIcon } from '../utils/weatherUtils';
+import {
+  formatTemperature,
+  formatTime,
+  getWeatherIcon,
+} from '../utils/weatherUtils';
 
 const WeatherCard = ({ weather }) => {
   // console.log(weather);
@@ -67,8 +71,19 @@ const WeatherCard = ({ weather }) => {
         </div>
 
         <div className="text-right">
-          <div className="text-white/70 text-sm">Friday, 20 February 2026</div>
-          <div className="text-white/50 text-xs">02:00 PM</div>
+          <div className="text-white/70 text-sm">
+            {new Date(weather.dt * 1000).toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'short',
+              day: 'numeric',
+            })}
+          </div>
+          <div className="text-white/50 text-xs">
+            {new Date(weather.dt * 1000).toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </div>
         </div>
       </div>
 
@@ -76,14 +91,15 @@ const WeatherCard = ({ weather }) => {
       <div className="flex items-center justify-between mb-10">
         <div className="flex-1">
           <div className="text-7xl font-bold text-white mb-3 tracking-tight">
-            9<span className="text-4xl font-normal text-white/70">°C</span>
+            {formatTemperature(weather.main.temp)}°
+            <span className="text-4xl font-normal text-white/70">C</span>
           </div>
           <div className="text-white/90 text-xl capitalize mb-2 font-medium">
-            A little Cloudy
+            {weather.weather[0].description}
           </div>
           <div className="flex items-center space-x-4 text-white/60 text-sm">
-            <span>High:12°</span>
-            <span>Low:4°</span>
+            <span>High:{formatTemperature(weather.main.temp_max)}°</span>
+            <span>Low:{formatTemperature(weather.main.temp_min)}°</span>
           </div>
         </div>
         <div className="text-white/90 transform hover:scale-110 transition-transform duration-300">
@@ -93,17 +109,24 @@ const WeatherCard = ({ weather }) => {
 
       {/* Weather Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/10 transition-all duration-300 group">
-          <div className="flex items-center space-x-3 mb-2">
-            <div className="p-2 rounded-full bg-white/10 group-hover:bg-white/20 transition-all">
-              <Eye className="w-4 h-4 text-cyan-300" />
+        {WeatherStats.map((stat, index) => (
+          <div
+            className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 hover:bg-white/10 transition-all duration-300 group"
+            key={index}
+          >
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="p-2 rounded-full bg-white/10 group-hover:bg-white/20 transition-all">
+                <stat.icon className={`w-4 h-4 ${stat.color}`} />
+              </div>
+              <span className="text-white/70 text-sm font-medium">
+                {stat.label}
+              </span>
             </div>
-            <span className="text-white/70 text-sm font-medium">
-              Visibility
-            </span>
+            <div className="text-white font-semibold text-lg pl-11">
+              {stat.value}
+            </div>
           </div>
-          <div className="text-white font-semibold text-lg pl-11">10 Km</div>
-        </div>
+        ))}
       </div>
 
       {/* Sunrise and Sunset */}
@@ -115,7 +138,9 @@ const WeatherCard = ({ weather }) => {
             </div>
             <span className="text-white/80 text-sm font-medium">Sunrise</span>
           </div>
-          <div className="text-white font-semibold text-lg pl-11">07:16 AM</div>
+          <div className="text-white font-semibold text-lg pl-11">
+            {formatTime(weather.sys.sunrise)}
+          </div>
         </div>
 
         <div className="bg-linear-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-400/20">
@@ -125,7 +150,9 @@ const WeatherCard = ({ weather }) => {
             </div>
             <span className="text-white/80 text-sm font-medium">Sunset</span>
           </div>
-          <div className="text-white font-semibold text-lg pl-11">06:15 PM</div>
+          <div className="text-white font-semibold text-lg pl-11">
+            {formatTime(weather.sys.sunset)}
+          </div>
         </div>
       </div>
     </div>

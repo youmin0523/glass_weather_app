@@ -80,3 +80,40 @@ export const searchCities = async (query) => {
     throw error;
   }
 };
+
+// GET Current Weather Data by Coordinates : 위치별 날씨 정보 가져오기
+export const getCurrentWeatherByCoords = async (lat, lon) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+    );
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error(
+          `Invalid API Key, Please Check Your API Key and Try Again.`,
+        );
+      } else {
+        throw new Error(
+          `Weather Service is temporarily unavailable, Please Try Again Later.`,
+        );
+      }
+    }
+
+    const data = await response.json();
+
+    if (!data.dt) {
+      // 현재 시간 표시가 없다면 현재 시간으로 대체
+      data.dt = Math.floor(Date.now() / 1000); // 현재 시간을 밀리초 단위에서 초단위로 표시하고 소숫점 누락
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(
+        'Network Error, Please Check Your Internet Connection and Try Again.',
+      );
+    }
+    throw error;
+  }
+};

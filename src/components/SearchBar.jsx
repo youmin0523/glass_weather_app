@@ -2,7 +2,7 @@ import { MapPin, Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { searchCities } from '../utils/weatherAPI';
 
-const SearchBar = ({ onSearch, loading }) => {
+const SearchBar = ({ onSearch, loading, onLocationSearch }) => {
   const [query, setQuery] = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
@@ -70,19 +70,22 @@ const SearchBar = ({ onSearch, loading }) => {
             placeholder="Search for city name Worldwide..."
             className="w-full pl-12 pr-24 py-4 bg-white/10 backdrop-blur-xl border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 hover:bg-white/15"
           />
-
-          {query ? (
+          {query && (
             <button
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10"
+              className="absolute right-12 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10"
               onClick={clearSearch}
             >
               <X />
             </button>
-          ) : (
-            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10">
-              <MapPin />
-            </button>
           )}
+
+          <button
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10"
+            onClick={onLocationSearch}
+            disabled={loading}
+          >
+            <MapPin />
+          </button>
         </div>
       </form>
 

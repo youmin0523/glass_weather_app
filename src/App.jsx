@@ -8,7 +8,13 @@ import useWeather from './hook/useWeather';
 
 const App = () => {
   // Hook Data
-  const { loading, error, fetchWeatherByCity, currentWeather } = useWeather();
+  const {
+    loading,
+    error,
+    fetchWeatherByCity,
+    currentWeather,
+    fetchWeatherByLocation,
+  } = useWeather();
   // console.log(loading, error);
   // console.log(currentWeather);
   return (
@@ -46,7 +52,11 @@ const App = () => {
 
             {/* Search Bar */}
             <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-6 mb-12">
-              <SearchBar onSearch={fetchWeatherByCity} loading={loading} />
+              <SearchBar
+                onSearch={fetchWeatherByCity}
+                loading={loading}
+                onLocationSearch={fetchWeatherByLocation}
+              />
             </div>
           </div>
 
