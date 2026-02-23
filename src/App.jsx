@@ -17,6 +17,7 @@ const App = () => {
     fetchWeatherByLocation,
     units,
     toggleUnit,
+    forecast,
   } = useWeather();
   // console.log(loading, error);
   // console.log(currentWeather);
@@ -91,7 +92,7 @@ const App = () => {
                     <WeatherCard weather={currentWeather} units={units} />
                   </div>
                   <div className="xl:col-span-1">
-                    <WeatherForecast />
+                    <WeatherForecast forecast={forecast} units={units} />
                   </div>
                 </div>
               </div>

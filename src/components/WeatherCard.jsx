@@ -17,7 +17,7 @@ import {
 
 const WeatherCard = ({ weather, units }) => {
   // console.log(weather);
-  console.log(weather.weather[0]);
+  // console.log(weather.weather[0]);
   const iconName = getWeatherIcon(weather.weather[0]);
   const IconComponent = LucideIcons[iconName];
   // console.log(iconName);
@@ -53,7 +53,7 @@ const WeatherCard = ({ weather, units }) => {
       color: 'text-orange-300',
     },
   ];
-  console.log(weather);
+  // console.log(weather);
 
   return (
     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300">

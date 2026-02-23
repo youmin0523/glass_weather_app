@@ -117,3 +117,35 @@ export const getCurrentWeatherByCoords = async (lat, lon) => {
     throw error;
   }
 };
+
+// GET Forecast Weather Data by City
+export const getWeatherForecast = async (city) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`,
+    );
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error(
+          `Invalid API Key, Please Check Your API Key and Try Again.`,
+        );
+      } else {
+        throw new Error(
+          `Weather Service is temporarily unavailable, Please Try Again Later.`,
+        );
+      }
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(
+        'Network Error, Please Check Your Internet Connection and Try Again.',
+      );
+    }
+    throw error;
+  }
+};
