@@ -16,11 +16,9 @@ import {
 } from '../utils/weatherUtils';
 
 const WeatherCard = ({ weather, units }) => {
-  // console.log(weather);
-  // console.log(weather.weather[0]);
   const iconName = getWeatherIcon(weather.weather[0]);
   const IconComponent = LucideIcons[iconName];
-  // console.log(iconName);
+
   const WeatherStats = [
     {
       icon: Eye,
@@ -53,10 +51,13 @@ const WeatherCard = ({ weather, units }) => {
       color: 'text-orange-300',
     },
   ];
-  // console.log(weather);
 
   return (
-    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300">
+    /* // //! [Original Code] 현재 콘텐츠 높이에 맞게 설정됨 */
+    /* // <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300"> */
+
+    /* // //* [Modified Code] h-full 및 flex flex-col 추가로 부모 높이 동기화 및 내부 요소 하단 정렬 최적화 */
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300 h-full flex flex-col">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-white/10 rounded-full">
@@ -134,7 +135,7 @@ const WeatherCard = ({ weather, units }) => {
       </div>
 
       {/* Sunrise and Sunset */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mt-auto">
         <div className="bg-linear-to-r from-orange-500/20 to-yellow-500/20 backdrop-blur-sm rounded-2xl p-4 border border-orange-400/20">
           <div className="flex items-center space-x-3 mb-2">
             <div className="p-2 bg-orange-400/20 rounded-full">

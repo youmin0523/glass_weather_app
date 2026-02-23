@@ -20,8 +20,7 @@ const App = () => {
     toggleUnit,
     forecast,
   } = useWeather();
-  // console.log(loading, error);
-  // console.log(currentWeather);
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
@@ -88,16 +87,29 @@ const App = () => {
 
             {currentWeather && !loading && (
               <div>
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                  <div className="xl:col-span-2">
+                {/* // //! [Original Code] 래퍼 컨테이너 및 높이 동기화 설정 부재 */}
+                {/* // <div className="grid grid-cols-1 xl:grid-cols-3 gap-8"> */}
+                {/* //   <div className="xl:col-span-2"> */}
+                {/* //     <WeatherCard weather={currentWeather} units={units} /> */}
+                {/* //   </div> */}
+                {/* //   <div className="xl:col-span-1"> */}
+                {/* //     <WeatherForecast forecast={forecast} units={units} /> */}
+                {/* //   </div> */}
+                {/* // </div> */}
+
+                {/* // //* [Modified Code] Grid 아이템에 flex flex-col을 적용하여 내부 컴포넌트가 높이를 100% 채우도록 보정 */}
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 items-stretch">
+                  <div className="xl:col-span-2 flex flex-col">
                     <WeatherCard weather={currentWeather} units={units} />
                   </div>
-                  <div className="xl:col-span-1">
+                  <div className="xl:col-span-1 flex flex-col">
                     <WeatherForecast forecast={forecast} units={units} />
                   </div>
                 </div>
 
-                <WeatherMap weather={currentWeather} />
+                <div className="mt-8">
+                  <WeatherMap weather={currentWeather} />
+                </div>
               </div>
             )}
           </div>

@@ -17,11 +17,14 @@ const WeatherForecast = ({ forecast, units }) => {
     return acc;
   }, {});
 
-  // console.log(dailyForecast);
   const dailyItems = Object.values(dailyForecast).slice(0, 5);
-  // console.log(dailyItems);
+
   return (
-    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+    /* // //! [Original Code] 고정 높이 또는 콘텐츠 높이 기반 */
+    /* // <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl"> */
+
+    /* // //* [Modified Code] h-full 및 flex flex-col 적용으로 전체 높이 사용 및 내부 아이템 균등 분산 */
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl h-full flex flex-col">
       <div className="flex items-center space-x-3 mb-8">
         <div className="p-2 bg-white/10 rounded-full">
           <Calendar className="w-6 h-6 text-white/80" />
@@ -30,7 +33,11 @@ const WeatherForecast = ({ forecast, units }) => {
       </div>
 
       {/* Forecast List */}
-      <div className="space-y-4">
+      {/* // //! [Original Code] space-y-4로 고정 간격 설정 */}
+      {/* // <div className="space-y-4"> */}
+
+      {/* // //* [Modified Code] flex-1과 justify-between을 사용하여 늘어난 카드 높이에 맞춰 아이템들을 분산 배치 */}
+      <div className="flex-1 flex flex-col justify-between overflow-hidden">
         {dailyItems.map((item, index) => {
           const iconName = getWeatherIcon(item.weather[0]);
           const IconComponent = LucideIcons[iconName];
